@@ -33,6 +33,8 @@ class CarouselItemsController extends Controller
     public function show(string $id)
     {
         //
+        // Retrieve a model by its primary key...
+        return CarouselItems::findorFail($id);
     }
 
 
