@@ -37,10 +37,15 @@ class AuthController extends Controller
      /** 
      * Logout using the specified resource.
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        // Retrieve a model by its primary key...
-        return false;
+       $request->user()->tokens()->delete();
+
+       $response = [
+            'message' => 'Logout.'
+       ];
+
+        return $response;
     }
 
 }
