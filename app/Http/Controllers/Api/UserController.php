@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -115,6 +116,25 @@ class UserController extends Controller
         $user = User::findorFail($id);
 
         $user->delete();
+
+        return $user;
+    }
+
+        /**
+     * Update the image of the specified resource in storage.
+     */
+    public function image(UserRequest $request, string $id)
+    {
+        //
+        $user = User::findorFail($id);
+
+        if(!is_null($user->image)){
+            Storage::disk('public')->delete($user->image);
+        }
+
+        $user->image = $request->file('image')->storePublicly('images', 'public');
+
+        $user->save();
 
         return $user;
     }
